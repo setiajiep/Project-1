@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unduh NIK & KK Bukhori</title>
+    <!-- Memuat Tailwind CSS untuk styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Memuat Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Menggunakan font Inter sebagai default */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+
+    <div class="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded-xl shadow-lg">
+        <!-- Judul Aplikasi -->
+        <h1 class="text-3xl font-bold text-center text-cyan-400">Unduh NIK Bukhori</h1>
+        <p class="text-center text-gray-400">Pilih nama untuk mengunduh data NIK dan No. KK.</p>
+
+        <!-- Form Kontrol -->
+        <div class="space-y-4">
+            <div>
+                <label for="nama-dropdown" class="block mb-2 text-sm font-medium text-gray-300">Pilih Nama:</label>
+                <select id="nama-dropdown" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 transition duration-300">
+                    <option value="" disabled selected>-- Pilih salah satu nama --</option>
+                </select>
+            </div>
+            
+            <!-- Tombol Unduh -->
+            <button id="unduh-btn" class="w-full px-4 py-3 font-semibold text-gray-900 bg-cyan-400 rounded-lg hover:bg-cyan-500 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-opacity-50 transition duration-300 shadow-md">
+                Unduh Data (.txt)
+            </button>
+        </div>
+
+        <!-- Area Pesan -->
+        <div id="pesan-area" class="text-center text-red-400 h-5"></div>
+    </div>
+
+    <script>
+        // Data yang diberikan, diubah menjadi format JSON untuk kemudahan pengelolaan
+        const dataBukhori = [
+            { nama: "ALI ANWAR SIDIK", nik: "1802040105020003", kk: "1802041705059625" },
+            { nama: "Amin riadi", nik: "1801100401020006", kk: "1801103101100001" },
+            { nama: "Anto Syahrul Fitra", nik: "1673011911010002", kk: "1673012504090002" },
+            { nama: "Aris Rudiyanto", nik: "0807010608050004", kk: "1807011709090001" },
+            { nama: "AUDY AHMAD RIVALDO", nik: "1801041607020006", kk: "Tidak ada data" },
+            { nama: "Bawono", nik: "1702081408000002", kk: "Tidak ada data" },
+            { nama: "Bima ferditya bagus pangestu aji", nik: "3317042202010001", kk: "Tidak ada data" },
+            { nama: "Diko Jaya Saputra", nik: "1808111203030003", kk: "1808111204080004" },
+            { nama: "Diky Wahyudi", nik: "172020302000001", kk: "1872021405070001" },
+            { nama: "Dimas Ari pirdaus", nik: "3205322205020001", kk: "Tidak ada data" },
+            { nama: "Galih amirul zaman", nik: "1802122610060002", kk: "Tidak ada data" },
+            { nama: "Harun prasnaya", nik: "1805272110020002", kk: "18052722612120005" },
+            { nama: "Ichwan faqih", nik: "1603200108030002", kk: "Tidak ada data" },
+            { nama: "IKHWAN IZHA VALEFI", nik: "1806262406060001", kk: "1806260204084125" },
+            { nama: "Ilham Zakisa Hadi", nik: "1802250610050003", kk: "Tidak ada data" },
+            { nama: "Irwansyah", nik: "1207090501020001", kk: "Tidak ada data" },
+            { nama: "Izza Maulana", nik: "1802072101030005", kk: "1802070501120021" },
+            { nama: "JUFI ORLANDO", nik: "1802260912000002", kk: "Tidak ada data" },
+            { nama: "KELVIAN FRANS VALENTINO", nik: "1503031502050002", kk: "1503031407100005" },
+            { nama: "KHOIRI SABILI", nik: "1801042003020003", kk: "Tidak ada data" },
+            { nama: "Luky Rahman Assidiki", nik: "1805180504050001", kk: "Tidak ada data" },
+            { nama: "M bram sanjaya", nik: "1803140207060003", kk: "1803142907110002" },
+            { nama: "M.Khoiril Mukminin", nik: "1671021106000008", kk: "1671022802080057" },
+            { nama: "Miftakhul Ikhsan", nik: "1802011607030002", kk: "Tidak ada data" },
+            { nama: "Muhamad nur huda Amrulloh", nik: "1607022502020004", kk: "1607020906110001" },
+            { nama: "Nanang ari fadli", nik: "180342503040004", kk: "1803141410120032" },
+            { nama: "Nasrun Hidayattulloh", nik: "1802260706020002", kk: "Tidak ada data" },
+            { nama: "Reno Afdhol Sawunggaling", nik: "1801045303010005", kk: "1801042403080792" },
+            { nama: "Royan Firdaus", nik: "1310040406000002", kk: "1310040601070448" },
+            { nama: "Setiaji Eka Putra", nik: "1802052708970002", kk: "Tidak ada data" },
+            { nama: "Syahrul Mubarok", nik: "3173010501010008", kk: "3173011703100069" },
+            { nama: "Wahyu Purwo Anggoro", nik: "1802010305050002", kk: "1802010802120013" }
+        ];
+
+        // Mengambil elemen dari HTML
+        const dropdown = document.getElementById('nama-dropdown');
+        const unduhBtn = document.getElementById('unduh-btn');
+        const pesanArea = document.getElementById('pesan-area');
+
+        // Fungsi untuk mengisi dropdown dengan nama-nama dari data
+        function populateDropdown() {
+            dataBukhori.forEach((orang, index) => {
+                const option = document.createElement('option');
+                option.value = index; // Menggunakan index array sebagai value
+                option.textContent = orang.nama;
+                dropdown.appendChild(option);
+            });
+        }
+
+        // Fungsi untuk mengunduh data sebagai file .txt
+        function unduhData() {
+            const selectedIndex = dropdown.value;
+
+            // Validasi jika belum ada nama yang dipilih
+            if (selectedIndex === "") {
+                pesanArea.textContent = 'Silakan pilih nama terlebih dahulu!';
+                // Menghilangkan pesan setelah 3 detik
+                setTimeout(() => {
+                    pesanArea.textContent = '';
+                }, 3000);
+                return;
+            }
+
+            // Mengambil data orang yang dipilih
+            const orang = dataBukhori[selectedIndex];
+            
+            // Membuat konten untuk file teks
+            const kontenTeks = `Nama Lengkap: ${orang.nama}\nNO NIK: ${orang.nik}\nNO KK: ${orang.kk}`;
+            
+            // Membuat Blob (Binary Large Object) dari konten teks
+            const blob = new Blob([kontenTeks], { type: 'text/plain;charset=utf-8' });
+            
+            // Membuat URL sementara untuk Blob
+            const url = URL.createObjectURL(blob);
+            
+            // Membuat elemen link (<a>) sementara untuk memicu unduhan
+            const link = document.createElement('a');
+            link.href = url;
+            // Menentukan nama file yang akan diunduh
+            link.download = `${orang.nama.replace(/ /g, '_')}_data.txt`;
+            
+            // Menambahkan link ke body, mengkliknya, lalu menghapusnya
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Melepaskan URL objek setelah tidak diperlukan
+            URL.revokeObjectURL(url);
+
+            // Mereset pesan error jika ada
+            pesanArea.textContent = '';
+        }
+
+        // Menjalankan fungsi untuk mengisi dropdown saat halaman dimuat
+        window.onload = populateDropdown;
+
+        // Menambahkan event listener ke tombol unduh
+        unduhBtn.addEventListener('click', unduhData);
+
+    </script>
+</body>
+</html>
