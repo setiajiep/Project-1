@@ -1,0 +1,9 @@
+# Ignore executable
+cloudflared.exe
+
+# Ignore sensitive script containing Zero Trust tunnel token
+create_service.bat
+
+# Ignore temporary/log files
+*.log
+*.tmp
