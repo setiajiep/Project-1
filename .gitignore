@@ -3,6 +3,8 @@ cloudflared.exe
 
 # Ignore sensitive script containing Zero Trust tunnel token
 create_service.bat
+setup_both_services.bat
+
 
 # Ignore temporary/log files
 *.log
